@@ -20,13 +20,13 @@ jobs:
           python-version: "3.12"
 
       - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            openjdk-17-jdk unzip git zip \
-            python3-pip libffi-dev libssl-dev python3-distutils \
-            libjpeg-dev libxcursor-dev libxrandr-dev libxinerama-dev \
-            libxi-dev libgl1-mesa-dev libgles2-mesa-dev xclip xsel
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y \
+      openjdk-17-jdk unzip git zip \
+      python3-pip python3-setuptools libffi-dev libssl-dev \
+      libjpeg-dev libxcursor-dev libxrandr-dev libxinerama-dev \
+      libxi-dev libgl1-mesa-dev libgles2-mesa-dev xclip xsel
 
       - name: Set ANDROID_HOME to GitHub SDK
         run: |
