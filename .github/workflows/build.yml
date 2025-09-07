@@ -31,16 +31,6 @@ jobs:
       - name: Install Buildozer
         run: pip install --user buildozer cython==0.29.36
 
-      - name: Install Android SDK and accept licenses
-        run: |
-          yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/tools/bin/sdkmanager --licenses || true
-          yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/tools/bin/sdkmanager --update || true
-
-      - name: Install required Android packages
-        run: |
-          $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/tools/bin/sdkmanager \
-            "build-tools;34.0.0" "platforms;android-34" "platform-tools"
-
       - name: Build APK
         run: buildozer android debug
 
