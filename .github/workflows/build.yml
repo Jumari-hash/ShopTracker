@@ -20,21 +20,26 @@ jobs:
           python-version: "3.12"
 
       - name: Install system dependencies
-  run: |
-    sudo apt-get update
-    sudo apt-get install -y \
-      openjdk-17-jdk unzip git zip \
-      python3-pip python3-setuptools libffi-dev libssl-dev \
-      libjpeg-dev libxcursor-dev libxrandr-dev libxinerama-dev \
-      libxi-dev libgl1-mesa-dev libgles2-mesa-dev xclip xsel
-
-      - name: Set ANDROID_HOME to GitHub SDK
         run: |
-          echo "ANDROIDSDK=$ANDROID_HOME" >> $GITHUB_ENV
-          echo "ANDROIDNDK=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+          sudo apt-get update
+          sudo apt-get install -y \
+            openjdk-17-jdk unzip git zip \
+            python3-pip python3-setuptools libffi-dev libssl-dev \
+            libjpeg-dev libxcursor-dev libxrandr-dev libxinerama-dev \
+            libxi-dev libgl1-mesa-dev libgles2-mesa-dev xclip xsel
 
       - name: Install Buildozer
         run: pip install --user buildozer cython==0.29.36
+
+      - name: Install Android SDK and accept licenses
+        run: |
+          yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/tools/bin/sdkmanager --licenses || true
+          yes | $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/tools/bin/sdkmanager --update || true
+
+      - name: Install required Android packages
+        run: |
+          $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/tools/bin/sdkmanager \
+            "build-tools;34.0.0" "platforms;android-34" "platform-tools"
 
       - name: Build APK
         run: buildozer android debug
